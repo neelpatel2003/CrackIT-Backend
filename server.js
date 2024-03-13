@@ -8,7 +8,7 @@ dotenv.config();
 
 const app = Express();
 const PORT = process.env.PORT || 8080;
-mongoose.connect("mongodb://localhost:27017/cracit-app-db");
+mongoose.connect(`${process.env.MONGOPATH}`);
 
 app.use(bodyParser.json());
 app.use(AllRoutes);
