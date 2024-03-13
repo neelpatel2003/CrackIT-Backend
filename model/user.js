@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 
-const UserSchema = mongoose.Schema({
-   username: { type: 'string', required: true,unique: true },
-   email: { type: 'string', required: true,unique: true},
-   password: { type: 'string', required: true }
+const UserSchema = new mongoose.Schema({
+   username: { type: String, required: true, unique: [true, 'Username already in use!'] },
+   email: { type: String, required: true},
+   password: { type: String, required: true, minLength: [4, 'Short password!'], maxLength: [10, 'Long password!'] },
+   problemSolved: {type:Number, default: 0 }
 });
 
 const model = mongoose.model('UserSchema', UserSchema);
