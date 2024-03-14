@@ -29,7 +29,8 @@ router.post('/api/chat', async (req, res) => {
       });
 
       return res.send(response.choices[0].message.content);
-   } catch {
+   } catch (error) {
+      console.log(error.message);
       return res.status(500).send({ status: 'error', message: 'Error requesting AI bot.' });
    }
 })
