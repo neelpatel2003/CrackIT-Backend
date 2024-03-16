@@ -7,12 +7,13 @@ router.post('/api/signup', async (req, res) => {
    console.log(req.body);
 
    const { username, email, password } = req.body;
-
+   const salt = await bcrypt.genSalt(10);
+   const hashPassword = await bcrypt.hash(password, salt);
    try {
       const newUser = new User({
          username: username,
          email: email,
-         password: password
+         password: hashPassword
       });
 
       const response = await newUser.save();
