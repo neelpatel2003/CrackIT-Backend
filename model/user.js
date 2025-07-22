@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const UserSchema = new mongoose.Schema({
    username: { type: String, required: true, unique: [true, 'Username already in use!'] },
    email: { type: String, required: true},
-   password: { type: String, required: true, minLength: [4, 'Short password!'], maxLength: [10, 'Long password!'] },
+   password: { type: String, required: true, minLength: [4, 'Short password!'] },
    problemSolved: {type:Number, default: 0 }
 });
 
