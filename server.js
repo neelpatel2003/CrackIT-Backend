@@ -1,18 +1,29 @@
-import Express from "express";
+import express from "express";
 import dotenv from 'dotenv';
 import mongoose from "mongoose";
-import User from './model/user.js';
 import bodyParser from "body-parser";
-import AllRoutes from './router/manageRoutes.js'
+import AllRoutes from './router/manageRoutes.js';
+import User from './model/user.js'; // Only if used here
+
 dotenv.config();
 
-const app = Express();
-const PORT = process.env.PORT || 8080;
-mongoose.connect(process.env.MONGOPATH);
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(AllRoutes);
 
-app.listen(PORT, () => {
-   console.log(`Listening on ${PORT}`);
+mongoose.connect(process.env.MONGOPATH, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 })
+    .then(() => {
+        console.log("✅ Connected to MongoDB");
+
+        app.listen(PORT, () => {
+            console.log(`🚀 Server running on http://localhost:${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.error("❌ MongoDB connection error:", err.message);
+    });
