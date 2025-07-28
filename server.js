@@ -7,13 +7,28 @@ import User from './model/user.js'; // Only if used here
 import efficiencyRouter from './router/efficiency.js';
 dotenv.config();
 import cors from 'cors';
-
 const app = express();
 
+
+const allowedOrigins = [
+    'http://localhost:5173',
+    'https://crack-it-frontend-nine.vercel.app'
+];
+
 app.use(cors({
-    origin: 'https://crack-it-frontend-nine.vercel.app', // allow Vercel frontend
-    credentials: true
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            console.log("Blocked CORS for origin:", origin);
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
 }));
+app.options('*', cors());
+
+
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(efficiencyRouter);
@@ -34,7 +49,7 @@ mongoose.connect(process.env.MONGOPATH, {
     .catch((err) => {
         console.error("❌ MongoDB connection error:", err.message);
     });
-    
+
 app.post('/api/logout', (req, res) => {
     // No backend state to clear? Just confirm logout.
     return res.status(200).json({ message: 'Logged out successfully' });
