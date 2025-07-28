@@ -4,12 +4,13 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import AllRoutes from './router/manageRoutes.js';
 import User from './model/user.js'; // Only if used here
-
+import efficiencyRouter from './router/efficiency.js';
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(efficiencyRouter);
 app.use(bodyParser.json());
 app.use(AllRoutes);
 
