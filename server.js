@@ -34,3 +34,8 @@ mongoose.connect(process.env.MONGOPATH, {
     .catch((err) => {
         console.error("❌ MongoDB connection error:", err.message);
     });
+    
+app.post('/api/logout', (req, res) => {
+    // No backend state to clear? Just confirm logout.
+    return res.status(200).json({ message: 'Logged out successfully' });
+});
