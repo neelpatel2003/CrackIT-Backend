@@ -1,7 +1,6 @@
 
 ---
 
-# ✅ CrackIT Backend – README.md
 
 # CrackIT - Backend
 
